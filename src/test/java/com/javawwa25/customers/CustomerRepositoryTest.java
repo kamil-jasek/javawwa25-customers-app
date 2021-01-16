@@ -1,24 +1,17 @@
 package com.javawwa25.customers;
 
 import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CustomerRepositoryTest {
-
-    @Autowired
-    private CustomerRepository repository;
-
-    @Autowired
-    private EntityManager em;
+class CustomerRepositoryTest extends EntityTest {
 
     @Test
     @Transactional
@@ -86,9 +79,20 @@ class CustomerRepositoryTest {
         assertEquals(2, row2.getCount());
     }
 
-    private void saveAll(Customer ...customers) {
-        repository.saveAll(asList(customers));
-        em.flush();
-        em.clear();
+    @Test
+    @Transactional
+    void testUpdatePersonName() {
+        // given
+        final var person = new Person("Jan", "Nowak", "839939393");
+        saveAll(person);
+
+        // when
+        final var updated = repository.updatePersonName(person.getId(), "Janek", "Nowaky");
+
+        // then
+        assertEquals(1, updated);
+        final var readPerson = (Person) readCustomer(person.getId());
+        assertEquals("Janek", readPerson.getFirstName());
+        assertEquals("Nowaky", readPerson.getLastName());
     }
 }

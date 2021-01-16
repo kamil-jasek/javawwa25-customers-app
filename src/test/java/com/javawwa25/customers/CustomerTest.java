@@ -11,13 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CustomerTest {
-
-    @Autowired
-    private CustomerRepository repository;
-
-    @Autowired
-    private EntityManager em;
+class CustomerTest extends EntityTest {
 
     @Test
     @Transactional
@@ -60,19 +54,5 @@ class CustomerTest {
         final var readCustomer = readCustomer(customer.getId());
         assertEquals(1, readCustomer.getAddresses().size());
         assertTrue(readCustomer.getAddresses().contains(address));
-    }
-
-    private void save(Customer customer) {
-        repository.save(customer);
-        clearCache();
-    }
-
-    private Customer readCustomer(UUID id) {
-        return Hibernate.unproxy(repository.getOne(id), Customer.class);
-    }
-
-    private void clearCache() {
-        em.flush();
-        em.clear();
     }
 }
