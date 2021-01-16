@@ -14,7 +14,7 @@ final class Person extends Customer {
     private String lastName;
     private String pesel;
 
-    // only for JPA
+    @OnlyJpa
     private Person() {}
 
     Person(String firstName, String lastName, String pesel) {
