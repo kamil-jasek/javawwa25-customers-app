@@ -1,10 +1,12 @@
 package com.javawwa25.customers;
 
+import static com.javawwa25.customers.CustomerSpec.withPersonFilter;
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.javawwa25.customers.CustomerSpec.PersonFilter;
 import java.math.BigInteger;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -94,5 +96,39 @@ class CustomerRepositoryTest extends EntityTest {
         final var readPerson = (Person) readCustomer(person.getId());
         assertEquals("Janek", readPerson.getFirstName());
         assertEquals("Nowaky", readPerson.getLastName());
+    }
+
+    @Test
+    @Transactional
+    void testFilterPerson() {
+        // given
+        final var customer1 = new Person("Jan", "Nowak", "9282992992");
+        final var customer2 = new Company("Test S.A.", "928838383");
+        final var customer3 = new Company("Testuj S.A.", "8290202020");
+        final var customer4 = new Person("Adam", "Kowalski", "9283002020");
+        saveAll(customer1, customer2, customer3, customer4);
+
+        // when - filter is empty
+        var results = repository.findAll(withPersonFilter(new PersonFilter(null, null, null)));
+        // then
+        assertEquals(4, results.size());
+
+        // when - filter by firstName
+        results = repository.findAll(withPersonFilter(new PersonFilter("Jan", null, null)));
+        // then
+        assertEquals(1, results.size());
+        assertTrue(results.contains(customer1));
+
+        // when - filter by lastName
+        results = repository.findAll(withPersonFilter(new PersonFilter("Ada", "Kow", null)));
+        // then
+        assertEquals(1, results.size());
+        assertTrue(results.contains(customer4));
+
+        // when - filter by pesel
+        results = repository.findAll(withPersonFilter(new PersonFilter(null, null, "928")));
+        // then
+        assertEquals(2, results.size());
+        assertTrue(results.containsAll(asList(customer1, customer4)));
     }
 }
