@@ -15,4 +15,15 @@ interface CustomerRepository extends JpaRepository<Customer, UUID> {
         + "group by a.city",
         nativeQuery = true)
     List<Object[]> countByCity();
+
+    @Query(value = "select count(c.id) as count, a.city  from customers c "
+        + "inner join addresses a on a.customer_id = c.id "
+        + "group by a.city",
+        nativeQuery = true)
+    List<CountByCity> countByCityWithType();
+
+    interface CountByCity {
+        int getCount();
+        String getCity();
+    }
 }

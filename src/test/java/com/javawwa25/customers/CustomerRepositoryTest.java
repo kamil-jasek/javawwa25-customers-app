@@ -57,8 +57,33 @@ class CustomerRepositoryTest {
 
         // then
         assertEquals(2, results.size());
-        assertArrayEquals(new Object[] {BigInteger.valueOf(1), "Kraków"}, results.get(0));
+        assertArrayEquals(new Object[] { BigInteger.valueOf(1), "Kraków"}, results.get(0));
         assertArrayEquals(new Object[] { BigInteger.valueOf(2), "Warszawa" }, results.get(1));
+    }
+
+    @Test
+    @Transactional
+    void testCountByCityWithType() {
+        // given
+        final var customer1 = new Person("Jan", "Nowak", "9282992992");
+        customer1.addAddress(new Address("str1", "Warszawa", "01-300", "PL"));
+        final var customer2 = new Company("Test S.A.", "928838383");
+        customer2.addAddress(new Address("str2", "Kraków", "01-400", "PL"));
+        final var customer3 = new Company("Testuj S.A.", "8290202020");
+        customer3.addAddress(new Address("str3", "Warszawa", "02-340", "PL"));
+        saveAll(customer1, customer2, customer3);
+
+        // when
+        final var results = repository.countByCityWithType();
+
+        // then
+        assertEquals(2, results.size());
+        final var row1 = results.get(0);
+        assertEquals("Kraków", row1.getCity());
+        assertEquals(1, row1.getCount());
+        final var row2 = results.get(1);
+        assertEquals("Warszawa", row2.getCity());
+        assertEquals(2, row2.getCount());
     }
 
     private void saveAll(Customer ...customers) {
