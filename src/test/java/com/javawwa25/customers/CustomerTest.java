@@ -41,8 +41,25 @@ class CustomerTest {
         // when
         save(company);
 
-        //
+        // then
         assertEquals(company, readCustomer(company.getId()));
+    }
+
+    @Test
+    @Transactional
+    void testAddAddress() {
+        // given
+        final var customer = new Company("Test S.A.", "929030202");
+        final var address = new Address("str", "wawa", "01-200", "PL");
+        customer.addAddress(address);
+
+        // when
+        save(customer);
+
+        // then
+        final var readCustomer = readCustomer(customer.getId());
+        assertEquals(1, readCustomer.getAddresses().size());
+        assertTrue(readCustomer.getAddresses().contains(address));
     }
 
     private void save(Customer customer) {
