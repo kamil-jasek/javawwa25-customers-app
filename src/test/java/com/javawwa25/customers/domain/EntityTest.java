@@ -1,4 +1,4 @@
-package com.javawwa25.customers;
+package com.javawwa25.customers.domain;
 
 import static java.util.Arrays.asList;
 
@@ -14,7 +14,7 @@ abstract class EntityTest {
     @Autowired
     protected EntityManager em;
 
-    protected void saveAll(Customer ...customers) {
+    protected void saveAll(Customer...customers) {
         repository.saveAll(asList(customers));
         em.flush();
         em.clear();

@@ -1,4 +1,4 @@
-package com.javawwa25.customers;
+package com.javawwa25.customers.domain;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;

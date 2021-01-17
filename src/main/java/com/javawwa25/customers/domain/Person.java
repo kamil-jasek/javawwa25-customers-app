@@ -1,7 +1,8 @@
-package com.javawwa25.customers;
+package com.javawwa25.customers.domain;
 
 import static java.util.Objects.requireNonNull;
 
+import com.javawwa25.customers.util.OnlyJpa;
 import java.util.Objects;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

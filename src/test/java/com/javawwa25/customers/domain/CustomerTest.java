@@ -1,13 +1,10 @@
-package com.javawwa25.customers;
+package com.javawwa25.customers.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.UUID;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest

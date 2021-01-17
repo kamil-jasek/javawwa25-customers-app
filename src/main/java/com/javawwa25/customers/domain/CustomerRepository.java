@@ -1,4 +1,4 @@
-package com.javawwa25.customers;
+package com.javawwa25.customers.domain;
 
 import java.util.List;
 import java.util.UUID;

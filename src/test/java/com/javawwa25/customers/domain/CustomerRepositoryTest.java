@@ -1,12 +1,12 @@
-package com.javawwa25.customers;
+package com.javawwa25.customers.domain;
 
-import static com.javawwa25.customers.CustomerSpec.withPersonFilter;
+import static com.javawwa25.customers.domain.CustomerSpec.withPersonFilter;
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.javawwa25.customers.CustomerSpec.PersonFilter;
+import com.javawwa25.customers.domain.CustomerSpec.PersonFilter;
 import java.math.BigInteger;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,8 @@
-package com.javawwa25.customers;
+package com.javawwa25.customers.domain;
 
 import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
