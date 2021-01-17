@@ -32,10 +32,10 @@ class CustomerService {
 
     @Transactional
     CompanyDto createCompany(CreateCompanyDto dto) {
-        final var company = new Company(dto.getName(), dto.getVatNumber());
+        final var company = new Company(dto.getName(), new VatNumber(dto.getVatNumber()));
         repository.save(company);
         return new CompanyDto(company.getId(),
             company.getName(),
-            company.getVatNumber());
+            company.getVatNumber().getValue());
     }
 }

@@ -21,9 +21,9 @@ class CustomerRepositoryTest extends EntityTest {
         // given
         final var customer1 = new Person("Jan", "Nowak", "9282992992");
         customer1.addAddress(new Address("str1", "Warszawa", "01-300", "PL"));
-        final var customer2 = new Company("Test S.A.", "928838383");
+        final var customer2 = new Company("Test S.A.", new VatNumber("9288383831"));
         customer2.addAddress(new Address("str2", "Kraków", "01-400", "PL"));
-        final var customer3 = new Company("Testuj S.A.", "8290202020");
+        final var customer3 = new Company("Testuj S.A.", new VatNumber("8290202020"));
         customer3.addAddress(new Address("str3", "Warszawa", "02-340", "PL"));
         saveAll(customer1, customer2, customer3);
 
@@ -41,9 +41,9 @@ class CustomerRepositoryTest extends EntityTest {
         // given
         final var customer1 = new Person("Jan", "Nowak", "9282992992");
         customer1.addAddress(new Address("str1", "Warszawa", "01-300", "PL"));
-        final var customer2 = new Company("Test S.A.", "928838383");
+        final var customer2 = new Company("Test S.A.", new VatNumber("9288383831"));
         customer2.addAddress(new Address("str2", "Kraków", "01-400", "PL"));
-        final var customer3 = new Company("Testuj S.A.", "8290202020");
+        final var customer3 = new Company("Testuj S.A.", new VatNumber("8290202020"));
         customer3.addAddress(new Address("str3", "Warszawa", "02-340", "PL"));
         saveAll(customer1, customer2, customer3);
 
@@ -62,9 +62,9 @@ class CustomerRepositoryTest extends EntityTest {
         // given
         final var customer1 = new Person("Jan", "Nowak", "9282992992");
         customer1.addAddress(new Address("str1", "Warszawa", "01-300", "PL"));
-        final var customer2 = new Company("Test S.A.", "928838383");
+        final var customer2 = new Company("Test S.A.", new VatNumber("9288383831"));
         customer2.addAddress(new Address("str2", "Kraków", "01-400", "PL"));
-        final var customer3 = new Company("Testuj S.A.", "8290202020");
+        final var customer3 = new Company("Testuj S.A.", new VatNumber("8290202020"));
         customer3.addAddress(new Address("str3", "Warszawa", "02-340", "PL"));
         saveAll(customer1, customer2, customer3);
 
@@ -103,8 +103,8 @@ class CustomerRepositoryTest extends EntityTest {
     void testFilterPerson() {
         // given
         final var customer1 = new Person("Jan", "Nowak", "9282992992");
-        final var customer2 = new Company("Test S.A.", "928838383");
-        final var customer3 = new Company("Testuj S.A.", "8290202020");
+        final var customer2 = new Company("Test S.A.", new VatNumber("9288383831"));
+        final var customer3 = new Company("Testuj S.A.", new VatNumber("8290202020"));
         final var customer4 = new Person("Adam", "Kowalski", "9283002020");
         saveAll(customer1, customer2, customer3, customer4);
 

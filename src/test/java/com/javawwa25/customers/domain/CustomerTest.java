@@ -27,7 +27,7 @@ class CustomerTest extends EntityTest {
     @Transactional
     void testCreateCompany() {
         // given
-        final var company = new Company("Test S.A.", "938493993");
+        final var company = new Company("Test S.A.", new VatNumber("9384939931"));
 
         // when
         save(company);
@@ -40,7 +40,7 @@ class CustomerTest extends EntityTest {
     @Transactional
     void testAddAddress() {
         // given
-        final var customer = new Company("Test S.A.", "929030202");
+        final var customer = new Company("Test S.A.", new VatNumber("9290302023"));
         final var address = new Address("str", "wawa", "01-200", "PL");
         customer.addAddress(address);
 
