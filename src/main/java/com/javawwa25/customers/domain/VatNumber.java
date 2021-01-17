@@ -19,6 +19,10 @@ final class VatNumber {
         this.value = value;
     }
 
+    static VatNumber of(String value) {
+        return new VatNumber(value);
+    }
+
     private void validate(String value) {
         if (value == null || !value.matches("\\d{10}")) {
             throw new IllegalArgumentException("Invalid vat number: " + value);

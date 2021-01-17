@@ -1,9 +1,12 @@
 package com.javawwa25.customers.domain;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toList;
 
 import com.javawwa25.customers.dto.CompanyDto;
+import com.javawwa25.customers.dto.CustomerDto;
 import com.javawwa25.customers.dto.PersonDto;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -12,9 +15,17 @@ import org.springframework.stereotype.Service;
 final class CustomerQuery {
 
     private final CustomerRepository repository;
+    private final CustomerMapper mapper;
 
-    CustomerQuery(CustomerRepository repository) {
+    CustomerQuery(CustomerRepository repository, CustomerMapper mapper) {
         this.repository = requireNonNull(repository);
+        this.mapper = requireNonNull(mapper);
+    }
+
+    List<CustomerDto> findAll() {
+        return repository.findAll().stream()
+            .map(mapper::map)
+            .collect(toList());
     }
 
     Optional<PersonDto> findPersonById(UUID id) {
