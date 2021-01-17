@@ -105,7 +105,7 @@ class CustomerRestApiTest {
             .willReturn(new PersonDto(UUID.randomUUID(), "Jan", "Nowak", "938388383"));
 
         // when
-        mvc.perform(post("/api/v1/customers?person")
+        mvc.perform(post("/api/v1/customers?type=person")
             .contentType(MediaType.APPLICATION_JSON)
             .content(createRequestContent(new CreatePersonDto("Jan", "Nowak", "938388383"))))
             .andExpect(jsonPath("$.id", notNullValue()))

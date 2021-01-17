@@ -30,12 +30,12 @@ final class CustomerRestApi {
         return facade.findAll();
     }
 
-    @PostMapping(params = { "person" })
+    @PostMapping(params = { "type=person" })
     PersonDto createPerson(@RequestBody CreatePersonDto dto) {
         return facade.createPerson(dto);
     }
 
-    @PostMapping(params = { "company" })
+    @PostMapping(params = { "type=company" })
     CompanyDto createCompany(@RequestBody CreateCompanyDto dto) {
         return facade.createCompany(dto);
     }
