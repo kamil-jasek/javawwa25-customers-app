@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 
 interface CustomerRepository extends JpaRepository<Customer, UUID>, JpaSpecificationExecutor<Customer> {
 
+    @Query("from Customer where id = :id")
+    Customer getOneById(UUID id);
+
     @Query("from Customer c inner join c.addresses a where upper(a.city) = upper(?1)")
     List<Customer> findByCity(String city);
 
