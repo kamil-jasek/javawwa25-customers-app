@@ -48,9 +48,9 @@ class CustomerRestApiTest {
         .registerModule(new ParameterNamesModule());
 
     @Test
-    void testFindAll() throws Exception {
+    void testFilterPerson() throws Exception {
         // given
-        given(facade.findAll()).willReturn(asList(
+        given(facade.filterPerson(any())).willReturn(asList(
             new CustomerDto(UUID.randomUUID(),
                 Type.COMPANY,
                 "Test S.A.",
@@ -62,7 +62,7 @@ class CustomerRestApiTest {
         ));
 
         // when
-        mvc.perform(get("/api/v1/customers"))
+        mvc.perform(get("/api/v1/customers?firstName=Jan"))
         // then
             .andExpect(jsonPath("$.length()", equalTo(2)))
             .andExpect(jsonPath("$.[0].type", equalTo("COMPANY")))

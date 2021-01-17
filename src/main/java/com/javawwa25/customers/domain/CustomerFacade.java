@@ -5,6 +5,7 @@ import com.javawwa25.customers.dto.CreateCompanyDto;
 import com.javawwa25.customers.dto.CreatePersonDto;
 import com.javawwa25.customers.dto.CustomerDto;
 import com.javawwa25.customers.dto.PersonDto;
+import com.javawwa25.customers.dto.PersonFilterDto;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,9 @@ public class CustomerFacade {
 
     public CompanyDto createCompany(CreateCompanyDto dto) {
         return service.createCompany(dto);
+    }
+
+    public List<CustomerDto> filterPerson(PersonFilterDto dto) {
+        return query.filterPerson(dto);
     }
 }
