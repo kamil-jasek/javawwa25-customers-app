@@ -1,11 +1,13 @@
 package com.javawwa25.customers.domain;
 
+import static com.javawwa25.customers.domain.CustomerSpec.withPersonFilter;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 
 import com.javawwa25.customers.dto.CompanyDto;
 import com.javawwa25.customers.dto.CustomerDto;
 import com.javawwa25.customers.dto.PersonDto;
+import com.javawwa25.customers.dto.PersonFilterDto;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,6 +26,12 @@ final class CustomerQuery {
 
     List<CustomerDto> findAll() {
         return repository.findAll().stream()
+            .map(mapper::map)
+            .collect(toList());
+    }
+
+    List<CustomerDto> filterPerson(PersonFilterDto filterDto) {
+        return repository.findAll(withPersonFilter(filterDto)).stream()
             .map(mapper::map)
             .collect(toList());
     }

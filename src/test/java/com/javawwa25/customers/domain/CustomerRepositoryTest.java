@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.javawwa25.customers.domain.CustomerSpec.PersonFilter;
+import com.javawwa25.customers.dto.PersonFilterDto;
 import java.math.BigInteger;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -109,24 +109,24 @@ class CustomerRepositoryTest extends EntityTest {
         saveAll(customer1, customer2, customer3, customer4);
 
         // when - filter is empty
-        var results = repository.findAll(withPersonFilter(new PersonFilter(null, null, null)));
+        var results = repository.findAll(withPersonFilter(new PersonFilterDto(null, null, null)));
         // then
         assertEquals(4, results.size());
 
         // when - filter by firstName
-        results = repository.findAll(withPersonFilter(new PersonFilter("Jan", null, null)));
+        results = repository.findAll(withPersonFilter(new PersonFilterDto("Jan", null, null)));
         // then
         assertEquals(1, results.size());
         assertTrue(results.contains(customer1));
 
         // when - filter by lastName
-        results = repository.findAll(withPersonFilter(new PersonFilter("Ada", "Kow", null)));
+        results = repository.findAll(withPersonFilter(new PersonFilterDto("Ada", "Kow", null)));
         // then
         assertEquals(1, results.size());
         assertTrue(results.contains(customer4));
 
         // when - filter by pesel
-        results = repository.findAll(withPersonFilter(new PersonFilter(null, null, "928")));
+        results = repository.findAll(withPersonFilter(new PersonFilterDto(null, null, "928")));
         // then
         assertEquals(2, results.size());
         assertTrue(results.containsAll(asList(customer1, customer4)));

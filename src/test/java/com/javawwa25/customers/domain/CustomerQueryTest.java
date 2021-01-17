@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.javawwa25.customers.dto.CustomerDto;
 import com.javawwa25.customers.dto.CustomerDto.Type;
+import com.javawwa25.customers.dto.PersonFilterDto;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,32 @@ class CustomerQueryTest extends EntityTest {
                 Type.PERSON,
                 person.getFullName(),
                 person.getPesel())
+        ), customers);
+    }
+
+    @Test
+    @Transactional
+    void testFilterPerson() {
+        // given
+        final var company = new Company("Test S.A.", VatNumber.of("9394384838"));
+        final var person1 = new Person("Jan", "Kowalski", "938848393");
+        final var person2 = new Person("Adam", "Kowalski", "938848393");
+        saveAll(company, person1, person2);
+
+        // when
+        final var customers = query.filterPerson(new PersonFilterDto(null, "Kowa", null));
+
+        // then
+        assertEquals(2, customers.size());
+        assertEquals(asList(
+            new CustomerDto(person1.getId(),
+                Type.PERSON,
+                person1.getFullName(),
+                person1.getPesel()),
+            new CustomerDto(person2.getId(),
+                Type.PERSON,
+                person2.getFullName(),
+                person2.getPesel())
         ), customers);
     }
 }
