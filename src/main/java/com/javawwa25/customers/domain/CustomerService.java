@@ -2,6 +2,8 @@ package com.javawwa25.customers.domain;
 
 import static java.util.Objects.requireNonNull;
 
+import com.javawwa25.customers.dto.CompanyDto;
+import com.javawwa25.customers.dto.CreateCompanyDto;
 import com.javawwa25.customers.dto.CreatePersonDto;
 import com.javawwa25.customers.dto.PersonDto;
 import javax.transaction.Transactional;
@@ -28,7 +30,12 @@ class CustomerService {
             person.getPesel());
     }
 
-    void createCompany() {
-
+    @Transactional
+    CompanyDto createCompany(CreateCompanyDto dto) {
+        final var company = new Company(dto.getName(), dto.getVatNumber());
+        repository.save(company);
+        return new CompanyDto(company.getId(),
+            company.getName(),
+            company.getVatNumber());
     }
 }
