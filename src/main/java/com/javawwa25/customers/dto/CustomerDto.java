@@ -1,5 +1,6 @@
 package com.javawwa25.customers.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Objects;
 import java.util.UUID;
 
