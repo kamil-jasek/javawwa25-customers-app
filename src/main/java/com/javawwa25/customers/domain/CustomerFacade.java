@@ -1,5 +1,7 @@
 package com.javawwa25.customers.domain;
 
+import com.javawwa25.customers.dto.CompanyDto;
+import com.javawwa25.customers.dto.CreateCompanyDto;
 import com.javawwa25.customers.dto.CreatePersonDto;
 import com.javawwa25.customers.dto.CustomerDto;
 import com.javawwa25.customers.dto.PersonDto;
@@ -26,4 +28,7 @@ public class CustomerFacade {
     }
 
 
+    public CompanyDto createCompany(CreateCompanyDto dto) {
+        return service.createCompany(dto);
+    }
 }

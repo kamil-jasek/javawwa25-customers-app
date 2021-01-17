@@ -2,25 +2,34 @@ package com.javawwa25.customers.api;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.javawwa25.customers.domain.CustomerFacade;
+import com.javawwa25.customers.dto.CreatePersonDto;
 import com.javawwa25.customers.dto.CustomerDto;
 import com.javawwa25.customers.dto.CustomerDto.Type;
+import com.javawwa25.customers.dto.PersonDto;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -87,5 +96,26 @@ class CustomerRestApiTest {
 
         // then
         assertEquals(customers, resultCustomers);
+    }
+
+    @Test
+    void testCreatePerson() throws Exception {
+        // given
+        given(facade.createPerson(any()))
+            .willReturn(new PersonDto(UUID.randomUUID(), "Jan", "Nowak", "938388383"));
+
+        // when
+        mvc.perform(post("/api/v1/customers?person")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(createRequestContent(new CreatePersonDto("Jan", "Nowak", "938388383"))))
+            .andExpect(jsonPath("$.id", notNullValue()))
+            .andExpect(jsonPath("$.firstName", equalTo("Jan")))
+            .andExpect(jsonPath("$.lastName", equalTo("Nowak")))
+            .andExpect(jsonPath("$.pesel", equalTo("938388383")))
+            .andDo(print());
+    }
+
+    private String createRequestContent(Object content) throws JsonProcessingException {
+        return jsonMapper.writeValueAsString(content);
     }
 }
